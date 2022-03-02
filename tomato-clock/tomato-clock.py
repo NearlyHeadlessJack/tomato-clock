@@ -32,7 +32,7 @@ while cur:
         beginTime = time.localtime(time.time())                     # 记录开始时间
         tB = time.mktime(beginTime)
         tC = time.mktime(curTime)
-        while tC-tB <= 5:
+        while tC-tB <= 25 * 60:
             curTime = time.localtime(time.time())
             tC = time.mktime(curTime)
             diff = time.gmtime(tC - tB)
@@ -47,7 +47,8 @@ while cur:
             beginTime = time.localtime(time.time())
             tB = time.mktime(beginTime)
             tC = time.mktime(curTime)
-            breakTime = skipTimes * 5 + 5  # accumulate break time
+            breakTime = skipTimes * 5 * 60 + 5 * 60  # accumulate break time
+            skipTimes = 0
             while tC - tB <= breakTime:
                 curTime = time.localtime(time.time())
                 tC = time.mktime(curTime)
