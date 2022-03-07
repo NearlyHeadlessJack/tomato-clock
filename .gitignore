@@ -153,3 +153,4 @@ cython_debug/
 .DS_Store
 
 tomato-clock/tomato-clock-own.py
+tomato-clock/git.sh
