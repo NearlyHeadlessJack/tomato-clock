@@ -152,3 +152,4 @@ cython_debug/
 .idea/
 .DS_Store
 
+tomato-clock/tomato-clock-own.py
