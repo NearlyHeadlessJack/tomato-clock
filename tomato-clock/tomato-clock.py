@@ -67,7 +67,6 @@ while cur:
             tC = time.mktime(curTime)
             breakTime = skipTimes * 5 * 60 + 5 * 60  # accumulate break time
             show_notification("Have A Break!", "You can rest for " + str(skipTimes * 5 + 5) + " mins!" )
-            skipTimes = 0
             while tC - tB <= breakTime:
                 curTime = time.localtime(time.time())
                 tC = time.mktime(curTime)
@@ -78,6 +77,7 @@ while cur:
                 time.sleep(0.98)
             show_notification("Let's Study!", "Break time is over!")
             print('\n\nBreak time is done! Clock will re-startup in 6 secs.')
+            skipTimes = 0
             time.sleep(6)
             os.system('clear')  # macOS
         else:
