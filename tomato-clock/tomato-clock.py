@@ -83,7 +83,6 @@ def writexls(times):
     return
 
 # =============================
-
 readxls()
 os.system('clear')  # macOS
 out1 = int(357 -curTime.tm_yday+1)
