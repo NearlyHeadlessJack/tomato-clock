@@ -12,6 +12,8 @@ import os
 import subprocess
 from pydub import AudioSegment
 from pydub.playback import play
+import xlrd
+import xlwt
 
 # =============================
 
@@ -39,6 +41,18 @@ def show_notification(title, text):
 
 # =============================
 
+# read and write xls===========
+
+
+
+
+
+
+
+
+
+
+# =============================
 
 os.system('clear')  # macOS
 print ("This is tomato clock, enjoy studying!\n")
