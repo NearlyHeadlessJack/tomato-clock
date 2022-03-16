@@ -85,6 +85,7 @@ def writexls(times):
 # =============================
 
 readxls()
+os.system('clear')  # macOS
 out1 = int(357 -curTime.tm_yday+1)
 out2 = int((357 -curTime.tm_yday+1)/7)
 print("Only "+ str(out1) +" days or "+str(out2)+" weeks left before UNGEE!")
