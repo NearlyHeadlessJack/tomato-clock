@@ -89,7 +89,7 @@ out1 = int(357 -curTime.tm_yday+1)
 out2 = int((357 -curTime.tm_yday+1)/7)
 print("Only "+ str(out1) +" days or "+str(out2)+" weeks left before UNGEE!")
 print("You have been learning "+str(numClocks*25)+" minutes today!")
-time.sleep(5.5)
+time.sleep(3.5)
 os.system('clear')  # macOS
 print ("This is tomato clock, enjoy studying!\n")
 while cur:
