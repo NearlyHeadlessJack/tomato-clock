@@ -117,7 +117,7 @@ while cur:
             tB = time.mktime(beginTime)
             tC = time.mktime(curTime)
             breakTime = skipTimes * 5 * 60 + 5 * 60  # accumulate break time
-            show_notification("Have a Break! ", "You can rest " + str(breakTime) + " minutes.")
+            show_notification("Have a Break! ", "You can rest " + str(skipTimes * 5 + 5) + " minutes.")
             while tC - tB <= breakTime - 4 :
                 curTime = time.localtime(time.time())
                 tC = time.mktime(curTime)
