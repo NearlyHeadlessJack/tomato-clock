@@ -33,7 +33,7 @@ skipTimes = 0 #跳过的休息次数
 cur = 1
 t1 = time.mktime(curTime)
 t2 = time.mktime(beginTime)
-song = AudioSegment.from_wav("assets/sound.wav")
+song = AudioSegment.from_wav("sound.wav")
 path = r'/Users/jack/Desktop/repo/Time_Table/tomatos.xls'
 
 
