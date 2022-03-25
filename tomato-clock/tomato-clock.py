@@ -42,13 +42,13 @@ while cur:
             time.sleep(0.98)
 
         print('\n\nCongratulations! The No.'+ str(numClocks) + ' clock is done.\n\n')
+        print('\n\nYou can have a rest for '+str(skipTimes * 5 * 60 + 5 * 60 )+' minutes!\n\n')
         time.sleep(2)
         if input("Start resting, please press enter!\nSkip rest (which would be accumulated), please enter the other:\n") == '':
             beginTime = time.localtime(time.time())
             tB = time.mktime(beginTime)
             tC = time.mktime(curTime)
             breakTime = skipTimes * 5 * 60 + 5 * 60  # accumulate break time
-            skipTimes = 0
             while tC - tB <= breakTime:
                 curTime = time.localtime(time.time())
                 tC = time.mktime(curTime)
@@ -59,6 +59,7 @@ while cur:
                 time.sleep(0.98)
             print('\n\nBreak time is done! Clock will re-startup in 6 secs.')
             time.sleep(6)
+            skipTimes = 0
             os.system('clear')  # macOS
         else:
             skipTimes = skipTimes + 1
