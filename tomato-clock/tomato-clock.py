@@ -109,24 +109,17 @@ while cur:
             time.sleep(0.98)
         show_notification("Well Done!", "The No."+ str(numClocks) + " clock is done.")
         print('\n\nCongratulations! The No.'+ str(numClocks) + ' clock is done.\n\n')
-<<<<<<< HEAD
-        print('\n\nYou can have a rest for '+str(skipTimes * 5 * 60 + 5 * 60 )+' minutes!\n\n')
+        print('\n\nYou can have a rest for '+str(skipTimes * 5 + 5 )+' minutes!\n\n')
         time.sleep(2)
-=======
         writexls(numClocks)
->>>>>>> 3e541e0210c8122f863e455a19a664aa37276b41
         if input("Start resting, please press enter!\nSkip rest (which would be accumulated), please enter the other:\n") == '':
             beginTime = time.localtime(time.time())
             tB = time.mktime(beginTime)
             tC = time.mktime(curTime)
             breakTime = skipTimes * 5 * 60 + 5 * 60  # accumulate break time
-<<<<<<< HEAD
             while tC - tB <= breakTime:
-=======
             show_notification("Have A Break!", "You can rest for " + str(skipTimes * 5 + 5) + " minutes!" )
-            skipTimes = 0
             while tC - tB <= breakTime - 4 :
->>>>>>> 3e541e0210c8122f863e455a19a664aa37276b41
                 curTime = time.localtime(time.time())
                 tC = time.mktime(curTime)
                 diff = time.gmtime(tC - tB)
