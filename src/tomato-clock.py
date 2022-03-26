@@ -6,7 +6,7 @@
 # =============================
 
 # import=======================
-
+from pyecharts.charts import Bar
 import time
 import os
 import subprocess
@@ -77,8 +77,20 @@ def WriteJson():
     history[localDate] += 1
     with open(path_json, "w+") as f:
         json.dump(history, f,indent=4)
-
+    Visualization()
     os.system("./git.sh")
+
+# =============================
+
+# visualize====================
+def Visualization():
+    global history
+    print(history.keys())
+    bar = Bar()
+    bar.add_xaxis(list(history.keys()))
+    bar.add_yaxis("番茄钟个数", list(history.values()))
+    bar.render()
+    os.system("cp render.html /Users/jack/Desktop/repo/Time_Table/docs/index.html")
 
 # =============================
 ReadJson()
