@@ -79,6 +79,7 @@ def WriteJson():
         json.dump(history, f,indent=4)
     Visualization()
     os.system("./git.sh")
+    os.system('clear')  # macOS
 
 # =============================
 
@@ -118,6 +119,7 @@ while cur:
             print('{0}  mins  {1} secs remaining!'.format(24-diff.tm_min,59-diff.tm_sec))
             time.sleep(0.98)
         os.system('clear')
+        show_notification("Congratulations!", "The No." + str(numClocks) + " clock is done.")
         print('Congratulations! The No.\033[1;31;40m'+ str(numClocks) + '\033[0m clock is done.')
         print('\nYou can have a rest for \033[1;31;40m'+str(skipTimes * 5 + 5 )+'\033[0m minutes!\n')
         time.sleep(2)
@@ -137,6 +139,7 @@ Skip rest (which would be accumulated), please enter the other:\n") == '':
                 print('Rest time!')
                 print('{0}  mins  {1} secs remaining!'.format(skipTimes * 5 + 5 - 1 - diff.tm_min, 59 - diff.tm_sec))
                 time.sleep(0.98)
+            os.system('clear')  # macOS
             show_notification("Let's Study!", "Break time is over!")
             print('\n\nBreak time is done! Clock will re-startup in 4 secs.')
             time.sleep(4)
