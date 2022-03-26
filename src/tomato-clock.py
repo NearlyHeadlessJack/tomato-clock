@@ -18,24 +18,26 @@ import xlrd
 from xlrd import xldate_as_tuple
 import xlwt
 from xlutils.copy import copy
+import json
+from pathlib import Path
 
 
 # =============================
 
 # variables====================
 
-
+localDate = time.strftime("%Y-%m-%d", time.localtime())
 curTime = time.localtime(time.time())#当前时间
 beginTime = time.localtime(time.time()) #开始时间
-global numClocks
+global numClocks,history
 numClocks = 0 #经历的番茄钟数量
 skipTimes = 0 #跳过的休息次数
 cur = 1
 t1 = time.mktime(curTime)
 t2 = time.mktime(beginTime)
 song = AudioSegment.from_wav("sound.wav")
-path = r'/Users/jack/Desktop/repo/Time_Table/tomatos.xls'
-
+path_json = r'/Users/jack/Desktop/repo/Time_Table/data.json'
+history = {localDate: 0}
 
 # =============================
 
@@ -48,47 +50,43 @@ def show_notification(title, text):
     play(song)
 
 # =============================
+def ReadJson():
+    global numClocks,history
+    init_data = {localDate: 0}
 
-# read and write xls===========
-def readxls():
-    data = xlrd.open_workbook(path)
-    table = data.sheet_by_index(0)
-    date = xldate_as_tuple(table.cell(0, 0).value, 0)
-    row = 0
-    # print(curTime.tm_mday)
-    while date[0] != curTime.tm_year or date[1] != curTime.tm_mon or date[2] != curTime.tm_mday:
-        row = row + 1
-        date = xldate_as_tuple(table.cell(row, 0).value, 0)
-    global numClocks
-    numClocks = int(table.cell_value(row, 1) + numClocks)
+    if Path(path_json).exists():
+        with open(path_json, "r") as f:
+            history = json.load(f)
+    else:
+        with open(path_json, "w+") as f:
+            json.dump(init_data, f,indent=4)
+        with open(path_json, "r") as f:
+            history = json.load(f)
 
-# =============================
+    if localDate not in history.keys():
+        history[localDate] = 0
+    
+    numClocks = int(history[localDate])
+        
 
-def writexls(times):
-    data = xlrd.open_workbook(path)
-    table = data.sheet_by_index(0)
-    date = xldate_as_tuple(table.cell(0, 0).value, 0)
-    row = 0
-    # print(curTime.tm_mday)
-    while date[0] != curTime.tm_year or date[1] != curTime.tm_mon or date[2] != curTime.tm_mday:
-        row = row + 1
-        date = xldate_as_tuple(table.cell(row, 0).value, 0)
-    workbook = copy(data)
-    worksheet = workbook.get_sheet(0)
-    worksheet.write(row, 1, times)
-    workbook.save(path)
 
-    os.system("zsh -e ./git.sh")
-    os.system("clear")
-    return
+# # =============================
+
+def WriteJson():
+    global history
+    history[localDate] += 1
+    with open(path_json, "w+") as f:
+        json.dump(history, f,indent=4)
+
+    os.system("./git.sh")
 
 # =============================
-readxls()
+ReadJson()
 os.system('clear')  # macOS
 out1 = int(357 -curTime.tm_yday+1)
 out2 = int((357 -curTime.tm_yday+1)/7)
-print("Only "+ str(out1) +" days or "+str(out2)+" weeks left before UNGEE!")
-print("You have been learning "+str(numClocks*25)+" minutes today!")
+print("Only \033[1;31;40m"+ str(out1) +"\033[0m days or "+str(out2)+" weeks left before UNGEE!")
+print("\nYou've been learning \033[1;31;40m"+str(numClocks*25)+"\033[0m minutes today!\n")
 time.sleep(3.5)
 os.system('clear')  # macOS
 print ("This is tomato clock, enjoy studying!\n")
@@ -107,12 +105,13 @@ while cur:
             print('This is the No.'+ str(numClocks) +' clock!')
             print('{0}  mins  {1} secs remaining!'.format(24-diff.tm_min,59-diff.tm_sec))
             time.sleep(0.98)
-        show_notification("Well Done!", "The No."+ str(numClocks) + " clock is done.")
-        print('\n\nCongratulations! The No.'+ str(numClocks) + ' clock is done.\n\n')
-        print('\n\nYou can have a rest for '+str(skipTimes * 5 + 5 )+' minutes!\n\n')
+        os.system('clear')
+        print('Congratulations! The No.\033[1;31;40m'+ str(numClocks) + '\033[0m clock is done.')
+        print('\nYou can have a rest for \033[1;31;40m'+str(skipTimes * 5 + 5 )+'\033[0m minutes!\n')
         time.sleep(2)
-        writexls(numClocks)
-        if input("Start resting, please press enter!\nSkip rest (which would be accumulated), please enter the other:\n") == '':
+        WriteJson()
+        if input("Start resting, please press \033[1;31;40menter\033[0m!\n\
+Skip rest (which would be accumulated), please enter the other:\n") == '':
             beginTime = time.localtime(time.time())
             tB = time.mktime(beginTime)
             tC = time.mktime(curTime)
@@ -127,12 +126,11 @@ while cur:
                 print('{0}  mins  {1} secs remaining!'.format(skipTimes * 5 + 5 - 1 - diff.tm_min, 59 - diff.tm_sec))
                 time.sleep(0.98)
             show_notification("Let's Study!", "Break time is over!")
-            print('\n\nBreak time is done! Clock will re-startup in 6 secs.')
-            time.sleep(6)
+            print('\n\nBreak time is done! Clock will re-startup in 4 secs.')
+            time.sleep(4)
             skipTimes = 0
             os.system('clear')  # macOS
         else:
-            skipTimes = skipTimes + 1
-
+            skipTimes += 1
     else:
         cur = 0
