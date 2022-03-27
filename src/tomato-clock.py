@@ -96,7 +96,6 @@ def Visualization():
 
 # =============================
 ReadJson()
-WriteJson()
 os.system('clear')  # macOS
 out1 = int(357 -curTime.tm_yday+1)
 out2 = int((357 -curTime.tm_yday+1)/7)
