@@ -86,20 +86,22 @@ def WriteJson():
 # visualize====================
 def Visualization():
     global history
-    print(history.keys())
     bar = Bar()
-    bar.add_xaxis(list(history.keys()))
-    bar.add_yaxis("番茄钟个数", list(history.values()))
+    list_data = list(history.keys())
+    bar.add_xaxis(list_data )
+    list_data_2 = [round(i * 25 /60.0,1) for i in list(history.values())]
+    bar.add_yaxis("学习时长（小时）",list_data_2 )
     bar.render()
     os.system("cp render.html /Users/jack/Desktop/repo/Time_Table/docs/index.html")
 
 # =============================
 ReadJson()
+WriteJson()
 os.system('clear')  # macOS
 out1 = int(357 -curTime.tm_yday+1)
 out2 = int((357 -curTime.tm_yday+1)/7)
-print("Only \033[1;31;40m"+ str(out1) +"\033[0m days or "+str(out2)+" weeks left before UNGEE!")
-print("\nYou've been learning \033[1;31;40m"+str(numClocks*25)+"\033[0m minutes today!\n")
+print("Only "+ str(out1) +" days or "+str(out2)+" weeks left before UNGEE!")
+print("\nYou've been learning "+str(numClocks*25)+" minutes today!\n")
 time.sleep(3.5)
 os.system('clear')  # macOS
 print ("This is tomato clock, enjoy studying!\n")
@@ -120,11 +122,11 @@ while cur:
             time.sleep(0.98)
         os.system('clear')
         show_notification("Congratulations!", "The No." + str(numClocks) + " clock is done.")
-        print('Congratulations! The No.\033[1;31;40m'+ str(numClocks) + '\033[0m clock is done.')
-        print('\nYou can have a rest for \033[1;31;40m'+str(skipTimes * 5 + 5 )+'\033[0m minutes!\n')
+        print('Congratulations! The No.'+ str(numClocks) + ' clock is done.')
+        print('\nYou can have a rest for '+str(skipTimes * 5 + 5 )+' minutes!\n')
         time.sleep(2)
         WriteJson()
-        if input("Start resting, please press \033[1;31;40menter\033[0m!\n\
+        if input("Start resting, please press enter!\n\
 Skip rest (which would be accumulated), please enter the other:\n") == '':
             beginTime = time.localtime(time.time())
             tB = time.mktime(beginTime)
