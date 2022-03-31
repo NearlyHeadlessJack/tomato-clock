@@ -122,9 +122,9 @@ while cur:
         os.system('clear')
         show_notification("Congratulations!", "The No." + str(numClocks) + " clock is done.")
         print('Congratulations! The No.'+ str(numClocks) + ' clock is done.')
-        time.sleep(1)
         WriteJson()
-        print('\nYou can have a rest for '+str(skipTimes * 5 + 5 )+' minutes!\n')
+        time.sleep(3)
+        print('You can have a rest for '+str(skipTimes * 5 + 5 )+' minutes!\n')
         if input("Start resting, please press enter!\n\
 Skip rest (which would be accumulated), please enter the other:\n") == '':
             beginTime = time.localtime(time.time())
