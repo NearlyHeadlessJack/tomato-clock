@@ -11,6 +11,7 @@ import time
 import os
 import subprocess
 from copy import copy
+import datetime
 
 from pydub import AudioSegment
 from pydub.playback import play
@@ -107,16 +108,21 @@ print ("This is tomato clock, enjoy studying!\n")
 while cur:
     if input("If you are ready to study, please press enter!\n") == '':
         numClocks = numClocks + 1
-        show_notification("Study Begins!", "The No." + str(numClocks) + " clock starts.")
+        i = datetime.datetime.now()
+        timeshift = i + datetime.timedelta(minutes=25) 
+        show_notification("Study Begins!", "The No." + str(numClocks) + " clock starts.\n")
         beginTime = time.localtime(time.time())                     # 记录开始时间
         tB = time.mktime(beginTime)
         tC = time.mktime(curTime)
         while tC-tB <= 25 * 60 -4:
+            nowTime = datetime.datetime.now()
             curTime = time.localtime(time.time())
             tC = time.mktime(curTime)
             diff = time.gmtime(tC - tB)
             os.system('clear')                                      # macOS
+            print("现在是%s:%s"%(nowTime.hour,nowTime.minute))
             print('This is the No.'+ str(numClocks) +' clock!')
+            print("番茄钟将在%s:%s结束\n"%(timeshift.hour,timeshift.minute))
             print('{0}  mins  {1} secs remaining!'.format(24-diff.tm_min,59-diff.tm_sec))
             time.sleep(0.98)
         os.system('clear')
